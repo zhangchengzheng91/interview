@@ -20,7 +20,7 @@
     |align-items:交叉轴上的对齐方式|flex-start \| flex-end \| center \| baseline \| stretch
     |align-content:多根轴线的对齐方式|flex-start \| flex-end \| center \| space-between \| space-around \| stretch
     
-    |容器属性||
+    |项目属性||
     |:---|:---|
     |order:项目的排列顺序|数值越小，排列越靠前，默认为0|
     |flex-grow:项目的放大比例|默认为0，即如果存在剩余空间，也不放大|
