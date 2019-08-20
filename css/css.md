@@ -8,7 +8,7 @@
     |width = border + padding + content|width = content|
 
 1. css 新属性：flex 布局  
-参考链接：[阮一峰的网络日志 >> Flex 布局教程：语法篇](http://www.ruanyifengcom/blog/2015/07/flex-grammar.html)  
+参考链接：[阮一峰的网络日志 >> Flex 布局教程：语法篇](http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html)  
 1. less、sass 相关的知识点：嵌套、变量、模块化
 1. 媒体查询
 1. css 选择器的权重
