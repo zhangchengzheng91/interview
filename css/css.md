@@ -1,3 +1,4 @@
+[返回目录](../README.md)
 ##### CSS 相关面试问题
 1. CSS 盒模型  
     ---
@@ -6,7 +7,7 @@
     |div { box-sizing: content-box; }|div { box-sizing: border-box; }|
     |![](./assets/content-box.png)|![](./assets/border-box.png)|
     |<code>width = content</code>|<code>width = border + padding + content</code>|
-1. css 新属性：flex 布局  
+2. css 新属性：flex 布局  
     ---
     参考链接：[阮一峰的网络日志 >> Flex 布局教程：语法篇](http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html)  
     ![](./assets/flex.png)  
@@ -28,10 +29,108 @@
     |flex-basis:在分配多余空间之前，项目占据的主轴空间|\<length> \| auto|
     |flex|\<flex-grow> \|\| \<flex-shrink> \|\| \<flex-basis>简写形式，快捷值：auto \| none
     |align-self:允许单个项目有与其他项目不一样的对齐方式|auto \| flex-start \| flex-end \| center \| baseline \| stretch
-1. less、sass 相关的知识点：嵌套、变量、模块化
-1. 媒体查询
-1. css 选择器的权重
-1. 父元素不确定宽高，该元素怎么上下左右居中显示
-1. BFC IFC
-1. css-modules相关知识点
+3. less、sass 相关的知识点：嵌套、变量、模块化  
+参考链接：[官方文档](https://www.html.cn/doc/sass/#features)  
+    1.  变量， **them.scss，定义全局基本样式变量**
+        ```scss
+            $width: 5em;
+            #main {
+              width: $width;
+            }
+        ```
+    1.  @mixin，结合默认参数(关键字参数)，可变参数
+        ```scss
+            @mixin sexy-border($color, $width: 1px) {
+                border: {
+                color: $color;
+                    width: $width;
+                style: dashed;
+                }
+            }
+            p {
+                @include sexy-border(blue);
+            }
+            h1 {
+                @include sexy-border(blue, 2px)
+            }
+        ```
+        编译结果
+        ```css
+            p {
+                border-color: blue;
+                border-width: 1px;
+                border-style: dashed;
+            }
+            h1 {
+                border-color: blue;
+                border-width: 2in;
+                border-style: dashed;
+            }
+        ```
+    1.  嵌套  
+        ```scss  
+            #main p {  
+                color: #00ff00;  
+                width: 97%;  
+                .redbox {  
+                    background-color: #ff0000;  
+                    color: #000000;  
+                }  
+            }  
+        ```
+    1.  引用父选择器: &  
+        ```scss
+            a {
+                font-weight: bold;
+                text-decoration: none;
+                &:hover {
+                    text-decoration: underline;
+                }
+                body.firefox & {
+                    font-weight: normal;
+                }
+            }
+        ```
+    1.  @extend
+         ```scss
+             .error {
+                 border: 1px #f00;
+                 background-color: #fdd;
+             }
+             .seriousError {
+                 @extend .error;
+                 border-width: 3px;
+             }
+        ```
+        编译结果：
+        ```css
+            .error, .seriousError {
+                border: 1px #f00;
+                background-color: #fdd;
+            }
+            .seriousError {
+                border-width: 3px;
+            }
+        ```
+    1.  @import，模块化
+        ```scss
+            @import "foo.css";
+            @import "foo" screen;
+            @import "http://foo.com/bar";
+            @import url(foo);
+        ```
+    1.  @media
+        ```scss
+            .sidebar {
+                width: 300px;
+                @media screen and (orientation: landscape) {
+                  width: 500px;
+                }
+            }
+        ```
+4. 媒体查询
+5. css 选择器的权重
+6. 父元素不确定宽高，该元素怎么上下左右居中显示
+7. BFC IFC
+8. css-modules相关知识点
 
