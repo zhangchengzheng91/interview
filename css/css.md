@@ -31,6 +31,7 @@
     |align-self:允许单个项目有与其他项目不一样的对齐方式|auto \| flex-start \| flex-end \| center \| baseline \| stretch
 3. less、sass 相关的知识点：嵌套、变量、模块化  
 参考链接：[官方文档](https://www.html.cn/doc/sass/#features)  
+    Tips: 注意@include 与 @extend 的区别
     1.  变量， **them.scss，定义全局基本样式变量**
         ```scss
             $width: 5em;
