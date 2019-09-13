@@ -222,7 +222,7 @@ class 命名技巧 BEM [BEM 101](https://css-tricks.com/bem-101/)：
 -- Element：对应模块中的节点名，如 Confirm Button。
 -- Modifier：对应节点的状态，如 disabled 和 highlight.  
 CSS files in which all <code>class names</code> and <code>animation names</code> are scoped locally by default.  
-[the classes] are dynamically generated, unique, and mapped to the correct styles.
-Part2: Getting Started with CSS Modules
+[the classes] are dynamically generated, unique, and mapped to the correct styles.  
+Part2: Getting Started with CSS Modules  
 Prat3: React + CSS Modules = 😍
 
