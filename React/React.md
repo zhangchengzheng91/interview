@@ -6,7 +6,9 @@
 1. React 的组件分类  
     无状态组件 | 有状态组件；容器型组件 | 展示型组件
 1. setState
-1. React的生命周期,多层嵌套的组件的生命周期
+1. React的生命周期,多层嵌套的组件的生命周期  
+[参考链接](http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)
+![](./assets/react_lifecycle.png)
 1. 组件间通信
 1. React hooks
 1. React HOC，HOC的意义，有哪些见过的HOC，使用过的HOC
