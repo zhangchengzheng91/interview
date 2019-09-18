@@ -3,15 +3,97 @@
 1. 说一下Vue和React的认识，做一个简单的对比。
 1. React的Dom的diff算法描述一下
 1. state 与 props 的区别
-1. React 的组件分类  
+1. React 的组件分类
     无状态组件 | 有状态组件；容器型组件 | 展示型组件
 1. setState
-1. React的生命周期,多层嵌套的组件的生命周期  
+1. React的生命周期,多层嵌套的组件的生命周期
 [参考链接](http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)
 ![](./assets/react_lifecycle.png)
 1. 组件间通信
 1. React hooks
-1. React HOC，HOC的意义，有哪些见过的HOC，使用过的HOC
+1. React HOC，HOC的意义，有哪些见过的HOC，使用过的HOC<br/>
+参考链接:[React Higher Order Components in depth](https://medium.com/@franleplant/react-higher-order-components-in-depth-cf9032ee6c3e)
+[知乎：](https://zhuanlan.zhihu.com/p/24776678)
+What are Higher Order Components? A Higher Order Component is just a React Component that wraps another one.
+    ```javascript
+    hocFactory:: W: React.Component => E: React.Component
+    ```
+The “wraps” part of the definition is intentionally vague because it can mean one of two things:
+1.Props Proxy: The HOC manipulates the props being passed to the WrappedComponent W,
+    What can be done with Props Proxy?
+    1.  Manipulating props（read, add, edit, remove）
+    1.  Accessing the instance via Refs（通过refs使用引用)
+```javascript
+function refsHOC(WrappedComponent) {
+    return class RefsHOC extends React.Component {
+        proc(wrappedComponentInstance) {
+            wrappedComponentInstance.method()
+        }
+        render() {
+            const props = Object.assign({}, this.props, {
+                ref: this.proc.bind(this)
+            })
+            return <WrappedComponent {...props}/>
+        }
+    }
+}
+```
+    1.  Abstracting State
+        提取state，通过props和callbacks给WrappedComponent；将 smart components 处理为 dumb componets 的方式非常的相似。
+        可以使用此HOC去实现数据双向绑定
+    1.  Wrapping the WrappedComponent with other elements：处理样式、布局；
+        Tips:有些基本用法可以直接使用Parent Components直接实现，但是HOCs 能提供更多灵活性。
+
+2.Inheritance Inversion: The HOC extends the WrappedComponent W(高阶组件继承于被包裹的 React 组件).
+```javascript
+function iiHOC(WrappedComponent) {
+    return class Enhancer extends WrappedComponent {
+        render() {
+            return super.render()
+        }
+    }
+}
+```
+    1.  Render Highjacking（渲染劫持）
+    If that element’s tree includes a Function Type React Component then you won't be able to manipulate that Component’s children. (They are deferred by React’s reconciliation process until it actually renders to the screen.)
+    didmount --> HOC didmont --> (HOCs didmount) --> will unmount --> HOC will ummount --> (HOCs will unmount)
+        1.  Read, add, edit, remove props in any of the React Elements outputted by render
+        1.  Read, and modify the React Elements tree outputted by render
+        1.  Conditionally display the elements tree
+        1.  Wrapping the element’s tree for styling purposes (as shown in Props Proxy)
+    <code>
+    NOTE: You cannot Render Highjack with Props Proxy.
+    While it is possible to access the render method via WrappedComponent.prototype.render, you will need to mock the WrappedComponent instance and its props, and potentially handle the component lifecycle yourself, instead of relying on React doing it. In my experiments it isn’t worth it and if you want to do Render Highjacking you should be using Inheritance Inversion instead of Props Proxy. Remember that React handles component instances internally and your only way of dealing with instances is via this or by refs.
+    </code>
+    1.  Manipulating state
+naming
+```javascript
+HOC.displayName = `HOC(${getDisplayName(WrappedComponent)})`
+//or
+class HOC extends ... {
+  static displayName = `HOC(${getDisplayName(WrappedComponent)})`
+  ...
+}
+```
+Case Studies
+React-redux --> connect(...params)(WrappedComponent) --> Props Proxy
+Radium --> CSS Pseudo selectors --> Inheritance Inversion
+react-router --> withRoter(WrappedComponent) --> Props Proxy
+antd --> Form.create(...params)(WrappedComponent)  --> Props Proxy
+```javascript
+HOCFactoryFactory(params)(WrappedComponent)
+//or
+@HOCFatoryFactory(params)
+class WrappedComponent extends React.Component{}
+```
+
+their limitations
+what you can do with them
+        1.  Code reuse, logic and bootstrap abstraction：代码复用，逻辑和bootstrap提取
+        1.  Render Highjacking: render 劫持
+        1.  State abstraction and manipulation：state 提取和操纵
+        1.  Props manipulation：props 操纵
+how they are implemented
 1. react-router： props | 动态路由
 1. redux 一个action 触发的遍历过程、为什么当前组件的stage不能存储到store 单中去
 1. 前端数据流管理工具用过哪些？解释一下这数据流管理工具出现的原因，解决的问题和它的本质原理。
