@@ -72,9 +72,10 @@
             1.  Read, and modify the React Elements tree outputted by render<br/>
             1.  Conditionally display the elements tree<br/>
             1.  Wrapping the element’s tree for styling purposes (as shown in Props Proxy)<br/>
-            **NOTE: You cannot Render Highjack with Props Proxy.**<br/>
-            **While it is possible to access the render method via WrappedComponent.prototype.render, you will need to mock the WrappedComponent instance and its props, and potentially handle the component lifecycle yourself, instead of relying on React doing it. In my experiments it isn’t worth it and if you want to do Render Highjacking you should be using Inheritance Inversion instead of Props Proxy. Remember that React handles component instances internally and your only way of dealing with instances is via this or by refs.**<br/>
         1.  Manipulating state<br/>
+
+        **NOTE: You cannot Render Highjack with Props Proxy.**<br/>
+        **While it is possible to access the render method via WrappedComponent.prototype.render, you will need to mock the WrappedComponent instance and its props, and potentially handle the component lifecycle yourself, instead of relying on React doing it. In my experiments it isn’t worth it and if you want to do Render Highjacking you should be using Inheritance Inversion instead of Props Proxy. Remember that React handles component instances internally and your only way of dealing with instances is via this or by refs.**<br/>
 
     naming
     ```
