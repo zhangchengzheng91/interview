@@ -91,6 +91,7 @@
 	Radium --> CSS Pseudo selectors --> Inheritance Inversion<br/>
 	react-router --> withRoter(WrappedComponent) --> Props Proxy<br/>
 	antd --> Form.create(...params)(WrappedComponent)  --> Props Proxy<br/>
+	recompose: A React utility belt for function components and higher-order components.<br/>
 	```javascript
     HOCFactoryFactory(params)(WrappedComponent)
     //or
