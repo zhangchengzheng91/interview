@@ -116,3 +116,30 @@
 1. ##### 在使用开源框架的时候有没有发现一些坑，如何去处理这些坑的。
 
 1. ##### 组件和模块的区别
+
+1. ##### Component, Elements, Instances 区别，掌握这些概念的意义
+
+1. ##### 编写更好的 React Code
+    [How To Write Better Code in React](https://blog.bitsrc.io/how-to-write-better-code-in-react-best-practices-b8ca87d462b0)
+    1.  Linting<br/>
+        [Airbnb’s JavaScript Style Guide](https://github.com/airbnb/javascript)<br/>
+        [React ESLint Package](https://github.com/yannickcr/eslint-plugin-react)
+    1.  模块化，代码复用<br/>
+        [Bit](https://bit.dev/)<br/>
+        [storybook](https://github.com/storybookjs/storybook)
+    1.  PropTypes 静态检验;defaultProps
+    1.  合理划分组件，防止组件过于笨重
+        1.  Is your code’s functionality becoming unwieldy(笨拙的)?
+        1.  Does it represent its own thing?
+        1.  Are you going to reuse your code?
+    1.  Component vs PureComponent vs Stateless Functional Component
+        1.  PureComponents:<br/>
+        [why-did-you-update](https://github.com/maicki/why-did-you-update)<br/>
+        Usually, when a component gets a new prop into it, React will re-render that component. But sometimes, a component gets new props that haven’t really changed, but React will still trigger a re-render.Using <code>PureComponent</code> will help you prevent this wasted re-render.
+    1.  React Dev Tools
+    1.  Use Inline Conditional Statements
+        1.  I didn’t have to write a separate function.
+        1.  I didn’t have to write another “if” statement in my render function.
+        1.  I didn’t have to create a “link” to somewhere else in the component.
+    1.  code snippets
+    1.  了解 React 源码
