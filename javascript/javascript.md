@@ -18,7 +18,7 @@
     |一般用于辨别用户身份或session跟踪而在用户浏览器的数据，会通过http请求发送给服务端；<br/>分为session cookie和持久性cookie，cookie中设置HttpOnly参数，前端浏览器使用document.cookie是无法读取HttpOnly类型的cookie，被设置HttpOnly的cookie记录只能通过http请求发送到服务端进行读写操作，避免js手动修改cookie，导致安全问题 | 永久存储，同一个域名能够共享，上线 5MB| 与loaclStorage类似，仅作用与当前窗口(当前的浏览器Tab)，窗口关闭是会自动清除 |
     |document.cookie|window.localStorage(localStrage)|window.sessionStorage(sessionStorage)|
     |返回一个字符串，使用split(';')切割为数组，再遍历split('=')处理成一个对象|返回一个对象|返回一个对象|
-    |请求携带cookie的方式:<br/>前端:{withCredentials: true}<br/>服务端header("Access-Control-Allow-Credentials: true");<br/>header("Access-Control-Allow-Origin: [hostname]");||
+    |请求携带cookie的方式:<br/>前端:{withCredentials: true}<br/>服务端header("Access-Control-Allow-Credentials: true");<br/>header("Access-Control-Allow-Origin: [hostname]");<br/>fetch([hostname], {credentials: \[include \| omit \| same-origin]})||
 
 1. #### ES6 相关知识点
     1. let, const 作用域问题；let 声明一个引用类型的数据的意义。
