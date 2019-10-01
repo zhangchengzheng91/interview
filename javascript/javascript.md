@@ -232,6 +232,22 @@
         ```
         这个例子的高效率体现在他只调用了一次 SuperType 构造函数，并且避免了在 SubType.prototype 上创建不必要的、多余的属性。与此同时，原型链还能保持不变；因此，还能够正常使用 instanceof 和 isProtoTypeOf()。开发人员认为寄生式组合继承是引用类型最理想的继承范式。
 1. #### 闭包，为什么会造成内存泄漏，闭包的使用场景
+    闭包是指有权访问另一个函数作用域中的变量的函数<br/>
+    ```javascript
+    function createComparisonFunction(propertyName) {
+        return function(object1, object2) {
+            var value1 = object1[propertyName] // propertyName 来自于 createComparisonFunction 的作用域
+            var value2 = object2[propertyName] // propertyName
+            if (value1 < value2>) {
+                return -1
+            } else if (value1 > value2) {
+                return 1
+            } else {
+                return 0
+            }
+        }
+    }
+    ```
 1. #### Javascript 垃圾回收机制
 1. #### 事件流
 1. #### 事件委托
