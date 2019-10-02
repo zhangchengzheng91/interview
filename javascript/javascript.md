@@ -268,7 +268,30 @@
     window.opera.collect() // Opera 7
     ```
     管理内存：一旦数据不再有用，最好通过将其值设置为 null 来释放其引用 --- 这个做法叫做**解除引用**(dereferencing).解除一个值的引用并不意味着自动回收该值所占用的内存。解除引用的真正作用是让值脱离执行环境，以便垃圾收集器下次运行时将其回收。
-1. #### 事件流
+1. #### 事件流<br/>
+    事件流描述的是从页面中接收事件的顺序。
+    ```html
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Event Bubbling Example</title>
+    </head>
+    <body>
+        <div id='mydiv'>Click Me</div>
+    </body>
+    </html>
+    ```
+    1.  事件冒泡<br/>
+        IE 的事件流叫做**事件冒泡**(event bubbling)，即事件开始时由最具体的元素(文档中嵌套层次最深的那个节点)接收，然后逐级向上传播到较为不具体的节点(文档 document)。
+        如果点击了\<div>元素，那么这个click事件的传播顺序：\<div>(Element) --> \<body>(Element) --> \<html>(Element) --> document.<br/>
+        现在所有的现代浏览器都支持事件冒泡。IE9,Firefox,Chrome和Safari则将事件一直冒泡到 window 对象上。
+    1.  事件捕获<br/>
+        Netscape Communicator 提出了另一种事件流叫做**事件捕获**(event capturing)。事件捕获的思想是不太具体的节点应该更早接收到事件，而最具体的节点应该最后接收到事件。事件捕获的用意在于事件到达预定目标之前捕获它。<br/>
+        如果点击了\<div>元素，那么这个click事件的传播顺序：document -->  \<html>(Element) --> <body>(Element) --> \<div>(Element).<br/>
+    1.  DOM事件流<br/>
+        "DOM2级事件流"规定的事件流包括三个阶段：事件捕获阶段、处于目标阶段和事件冒泡阶段。<br/>
+        如果点击了\<div>元素，那么这个click事件的传播顺序：document -->  \<html>(Element) --> <body>(Element) --> \<div>(Element)--> \<body>(Element) --> \<html>(Element) --> document.<br/>
+        在 DOM事件流中，实际的目标（\<div>元素）在捕获阶段不会接收事件。这意味着在捕获阶段，事件从 document 到 \<html> 再到 \<body> 就停止了。写一个阶段是“处于目标”阶段，于是事件在 \<div> 上发生，并在事件处理中被看成冒泡阶段的一部分。然后，冒泡阶段发生，事件又传播回 document。
 1. #### 事件委托
 1. #### 跨域  
 浏览器同源概念；为什么浏览器会有同源策略的限制；跨域的解决方式；
