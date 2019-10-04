@@ -320,7 +320,138 @@
     1. 对象的深拷贝 | 浅拷贝
     1. 如何复制一个对象 
     1. new 关键字的内部处理，new 关键字做了什么样的操作。构造函数不使用 new 关键字初始化一个实例
+        ```javascript
+        function Tree(color, age) {
+            if (this instanceof Tree) {
+                this.color = color
+                this.age = age
+            } else {
+                return new Tree(color, age)
+            }
+        }
+        var tree1 = new Tree('red', 12) // {color: "red", age: 12}
+        var tree2 = Tree('green', 13) // {color: "green", age: 13}
+        ```
 1. #### bind, call, apply 三个函数异同。自己动手实现一个 bind 函数。
+    函数是对象，函数名是指针。<br/>
+    函数没有重载。
+    ```javascript
+    var sum = function(num) {
+        return sum + 100
+    }
+    sum = function(sum) {
+        return sum + 200
+    }
+    var result = sum(100) // 300
+    ```
+    函数声明的函数有函数声明提升；函数表达式声明的函数，必须等到解析器执行到它所在的代码行，才会真正被解释执行。
+    | apply | call | bind |
+    |---|---|---|
+    |apply() 方法调用一个具有给定this值的函数，以及作为一个数组（或类似数组对象）提供的参数。|call() 方法使用一个指定的 this 值和单独给出的一个或多个参数来调用一个函数。|bind()方法创建一个新的函数，在bind()被调用时，这个新函数的this被bind的第一个参数指定，其余的参数将作为新函数的参数供调用时使用。|
+    | apply(this, [arg1, arg2, arg3])| call(this, arg1, arg3)| bind(this, arg1, arg2, arg3)
+    | 第一个参数为运行函数的作用域，第二个参数为一个数组| 第一个参数为运行函数的作用域，其余参数需要逐个列出来 | 第一个参数为运行函数的作用域，其余参数需要逐个列出来 |
+    | 返回函数执行的结果 | 返回函数执行的结果 | 创建一个函数实例，其 this 值会被绑定到传给 bind(this) 函数的值 |
+    自己手动实现一个 bind 函数:<br/>
+    参考链接1:[JavaScript深入之bind的模拟实现](https://github.com/mqyqingfeng/Blog/issues/12)<br/>
+    参考链接2: [Function.prototype.bind()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/bind)
+    1. 返回函数的模拟实现
+        ```javascript
+        Function.prototype.bind2 = function(context) {
+            const self = this
+            return function() {
+                return self.call(context)
+            }
+        }
+        // test code
+        var foo = {
+            value: 1
+        }
+        function bar() {
+            console.log('this.value=', this.value)
+        }
+        var bindFoo = bar.bind2(foo)
+        bindFoo() // this.value= 1
+        ```
+    1. 传参的模拟实现
+        ```javascript
+        Function.prototype.bind2 = function(context) {
+            const self = this
+            const args = Array.prototype.slice.call(arguments, 1)
+            return function() {
+                const bindArgs = Array.prototype.slice.call(arguments)
+                return self.apply(context, args.concat(bindArgs))
+            }
+        }
+        // test code
+        var foo = {
+            value: 1
+        }
+        function bar(name, age) {
+            console.log('this.value=', this.value)
+            console.log('name=', name)
+            console.log('age=', age)
+        }
+        var bindFoo = bar.bind2(foo, 'tom')
+        bindFoo(18)
+        // this.value= 1
+        // name= 'tom'
+        // age= 18
+        ```
+    1. 构造函数的模拟实现
+        ```javascript
+        Function.prototype.bind2 = function(context) {
+            const self = this
+            const args = Array.prototype.slice.call(arguments, 1)
+            var fNOP = function() {}
+            var fBound = function() {
+                const bindArgs = Array.prototype.slice.call(arguments)
+                return self.apply(this instanceof fBound ? this : context, args.concat(bindArgs))
+            }
+            if (this.prototype) {
+                fNOP.prototype = this.prototype
+            }
+            fBound.prototype = new fNOP()
+            return fBound
+        }
+        // test code
+        var value = 2 // window.value = 2
+        var foo = {
+            value: 1
+        }
+        function bar(name, age) {
+            this.gender = 'male'
+            console.log('this.value=', this.value)
+            console.log('name=', name)
+            console.log('age=', age)
+        }
+        bar.prototype.friend = 'cat';
+        var bindFoo = bar.bind2(foo, 'tom')
+        var obj = new bindFoo('18')
+        // this.value= undefined
+        // name= 'tom'
+        // age= undefined
+        obj.gerder // 'male'
+        obj.friend // 'cat'
+
+        var bindFoo2 = bar.bind2(foo, 'Iron Man')
+        var obj2 = bindFoo2(43)
+        // this.value= 1
+        // name= 'Iron Man'
+        // age= 43
+        typeof obj2 // 'undefined'
+        ```
+    1. Tips
+        ```javascript
+        // 健壮
+        if (typeof this !== "function") {
+            throw new Error("Function.prototype.bind - what is trying to be bound is not callable");
+        }
+        // 兼容
+        Function.prototype.bind = Function.prototype.bind || function () {
+            ……
+        }
+        ```
+1. #### throttle, debounce函数
 1. #### requestAnimationFrame
 1. #### event loop | microtask
 1. #### 如何用 Generator 去实现 async
