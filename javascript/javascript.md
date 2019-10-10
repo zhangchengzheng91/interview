@@ -318,6 +318,81 @@
     1. 数组的新方法
     1. 对象的遍历
     1. 对象的深拷贝 | 浅拷贝
+        浅拷贝：创建一个新对象，这个对象有着原始对象属性值的一份精确拷贝。如果属性是基本类型，拷贝的就是基本类型的值，如果属性是引用类型，拷贝的就是内存地址。所以如果其中一个对象改变了这个地址，就会印象到另一个对象。
+
+        深拷贝：将一个对象从内存中完整的拷贝出来，从堆内存中开辟一个新的区域存放新对象，且修改新对象不会印象原对象。
+
+        实现深拷贝的方式：
+
+        1. 使用原生的方法
+            ```javascript
+            JSON.stringfy()
+            JSON.parse()
+            ```
+            存在的问题：拷贝其他引用类型、拷贝函数、循环引用等情况。
+        1. 使用遍历递归去解决深拷贝问题
+            1. 遍历递归实现浅拷贝
+                ```javascript
+                function shallowClone(target) {
+                    let cloneTarget = {}
+                    for(let key in target) {
+                        cloneTarget[key] = target[key]
+                    }
+                    return cloneTarget
+                }
+
+                // test code
+                const target = {
+                    layer11: true,
+                    layer12: undefined,
+                    layer13: {
+                        layer21: 'layer21',
+                    },
+                }
+                const cloneTarget = shallowClone(target)
+                target.layer11 = false
+                target.layer13.layer21 = 'modify-layer21'
+
+                cloneTarget.layer11 // true
+                cloneTarget.layer13.layer21 // "modify-layer21"
+                ```
+            1. 遍历递归实现深拷贝对象
+                ```javascript
+                function deepClone(target) {
+                    let cloneTarget = {}
+                    for (let key in target) {
+                        if (typeof target[key] === 'object') {
+                            cloneTarget[key] = deepClone(target[key])
+                        } else {
+                            cloneTarget[key] = target[key]
+                        }
+                    }
+                    return cloneTarget
+                }
+                // test code
+                var target = {
+                    layer11: true,
+                    layer12: undefined,
+                    layer13: 'layer13',
+                    layer14: {
+                        layer21: 'layer21',
+                        layer22: {
+                            layer31: 'lauer31',
+                            layer32: {
+                                layer41: 'layer41',
+                            }
+                        }
+                    }
+                }
+                var cloneTarget = deepClone(target)
+                target.layer13 = 'modify-layer13'
+                target.layer14.layer21 = 'modify-layer21'
+                target.layer14.layer22.layer31 = 'modify-layer31'
+
+                cloneTarget.layer13 // 'layer13'
+                cloneTarget.layer14.layer21 // 'layer21'
+                cloneTarget.layer14.layer22.layer31 // 'layer31'
+                ```
     1. 如何复制一个对象 
     1. new 关键字的内部处理，new 关键字做了什么样的操作。构造函数不使用 new 关键字初始化一个实例
         ```javascript
