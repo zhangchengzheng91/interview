@@ -58,3 +58,8 @@ jobs:
           ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           PUBLISH_BRANCH: ebooks
           PUBLISH_DIR: ./_book
+      - name: 'output book links'
+        run: |
+          echo https://github.com/zhangchengzheng91/interview/raw/ebooks/interview-book.pdf
+          echo https://github.com/zhangchengzheng91/interview/raw/ebooks/interview-book.epub
+          echo https://github.com/zhangchengzheng91/interview/raw/ebooks/interview-book.mobi
