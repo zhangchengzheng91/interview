@@ -28,6 +28,7 @@ jobs:
           ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           PUBLISH_BRANCH: gh-pages
           PUBLISH_DIR: ./_book
+
   job_deploy_ebooks:
     name: 'deploy ebooks'
     runs-on: ubuntu-latest
